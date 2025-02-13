@@ -1,19 +1,14 @@
 FROM alpine:3.18
 
+apk add lighttpd php82 fcgi php82-cgi
+
 RUN apk update && apk add --no-cache \
-    php81 \
-    php81-fpm \
-    php81-mysqli \
-    php81-json \
-    php81-curl \
-    php81-dom \
-    php81-exif \
-    php81-fileinfo \
-    php81-mbstring \
-    php81-openssl \
-    php81-xml \
-    php81-zip \
-    php81-phar \
+	lighttpd \
+	php82 \
+	fcgi \
+	php82-cgi \
+	tar \
+	wget \
     curl \
     mysql-client
 
@@ -26,12 +21,12 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN mkdir -p /var/run/php && \
     sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php81/php-fpm.d/www.conf
 
-COPY tools/wordpress_setup.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/wordpress_setup.sh
+COPY wordpress.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/wordpress.sh
 
 WORKDIR /var/www/html
 
 EXPOSE 9000
 
-ENTRYPOINT ["/usr/local/bin/wordpress_setup.sh"]
+ENTRYPOINT ["/usr/local/bin/wordpress.sh"]
 CMD ["/usr/sbin/php-fpm81", "-F"]
