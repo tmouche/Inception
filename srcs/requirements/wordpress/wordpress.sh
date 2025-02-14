@@ -1,15 +1,17 @@
 #!/bin/sh
 
 # Wait for MariaDB to be ready
-while ! mysqladmin ping -h${DB_HOST} -u${DB_USER} -p${DB_PASSWORD} --silent; do
-    echo "Waiting for MariaDB..."
-    sleep 1
-done
+# while ! mysqladmin ping -h${DB_HOST} -u${DB_USER} -p${DB_PASSWORD} --silent; do
+#     echo "Waiting for MariaDB..."
+#     sleep 1
+# done
+
+cd /usr/share/webapps/
 
 # Check if WordPress is installed
 if [ ! -f "wp-config.php" ]; then
     # Download WordPress
-    wp core download --allow-root
+    #wp core download --allow-root
 
     # Create wp-config.php
     wp config create --allow-root \

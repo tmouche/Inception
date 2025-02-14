@@ -1,32 +1,31 @@
 FROM alpine:3.18
 
-apk add lighttpd php82 fcgi php82-cgi
-
 RUN apk update && apk add --no-cache \
-	lighttpd \
 	php82 \
 	fcgi \
 	php82-cgi \
 	tar \
 	wget \
-    curl \
+	# coreutils \
     mysql-client
 
-# Install wp-cli
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
-    chmod +x wp-cli.phar && \
-    mv wp-cli.phar /usr/local/bin/wp
+RUN mkdir -p /usr/share/webapps/
+RUN cd /usr/share/webapps/
+RUN wget https://wordpress.org/latest.tar.gz
+RUN tar -xzvf latest.tar.gz
+RUN	rm latest.tar.gz
 
-# Configure php-fpm
-RUN mkdir -p /var/run/php && \
-    sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php81/php-fpm.d/www.conf
+# Copier un fichier www.conf personnalisé
+COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 COPY wordpress.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wordpress.sh
+RUN /usr/local/bin/wordpress.sh
 
-WORKDIR /var/www/html
+# WORKDIR /var/www/html
 
 EXPOSE 9000
 
-ENTRYPOINT ["/usr/local/bin/wordpress.sh"]
-CMD ["/usr/sbin/php-fpm81", "-F"]
+CMD ["/usr/sbin/php-fpm82", "-F"]
+
+#pb de PID 1 il est beaucoup trop long a cut
