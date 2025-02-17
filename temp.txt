@@ -1,0 +1,13 @@
+
+// FICHIER WordPress/.conf
+
+env[HOSTNAME] = $HOSTNAME
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+env[TMP] = /tmp
+env[TMPDIR] = /tmp
+env[TEMP] = /tmp
+
+php_admin_value[error_log] = /var/log/php-fpm.log
+php_admin_flag[log_errors] = on
+
+// 

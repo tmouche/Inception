@@ -11,14 +11,15 @@ cd /usr/share/webapps/
 # Check if WordPress is installed
 if [ ! -f "wp-config.php" ]; then
     # Download WordPress
-    #wp core download --allow-root
+	wp core download --allow-root
 
     # Create wp-config.php
     wp config create --allow-root \
         --dbname=${DB_NAME} \
         --dbuser=${DB_USER} \
         --dbpass=${DB_PASSWORD} \
-        --dbhost=${DB_HOST}
+        --dbhost=${DB_HOST} \
+		--path=/usr/share/webapps/
 
     # Install WordPress
     wp core install --allow-root \
@@ -35,8 +36,6 @@ if [ ! -f "wp-config.php" ]; then
         --role=author
 
     # Set correct permissions
-    chown -R nobody:nobody /var/www/html
+    chown -R web-data:web-data /usr/share/webapps/wordpress
 fi
 
-# Execute CMD
-exec "$@"
