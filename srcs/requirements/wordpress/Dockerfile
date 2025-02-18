@@ -20,11 +20,6 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
     chmod +x /usr/local/bin/wp
 
 RUN mkdir -p /usr/share/webapps/ 
-# && \
-# 	cd /usr/share/webapps/ && \
-# 	wget https://wordpress.org/latest.tar.gz && \
-# 	tar -xzvf latest.tar.gz && \
-# 	rm latest.tar.gz
 
 # Copier un fichier www.conf personnalisé
 RUN addgroup -S web-data && adduser -S web-data -G web-data
@@ -32,7 +27,7 @@ COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 COPY wordpress.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wordpress.sh
-RUN /usr/local/bin/wordpress.sh
+# RUN /usr/local/bin/wordpress.sh
 
 EXPOSE 9000
 

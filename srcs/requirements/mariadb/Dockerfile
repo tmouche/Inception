@@ -1,19 +1,29 @@
+# Use Alpine as the base image
 FROM alpine:3.18
 
+# Set environment variables for MariaDB setup
+ENV MARIADB_ROOT_PASSWORD=root \
+    MARIADB_DATABASE=mydatabase \
+    MARIADB_USER=myuser \
+    MARIADB_PASSWORD=mypassword
+
+# Update and install MariaDB
 RUN apk update && apk add --no-cache \
-    mariadb \
-    mariadb-client
+	mariadb \
+	mariadb-client
 
-# Create necessary directories
-RUN mkdir -p /run/mysqld && \
-    chown -R mysql:mysql /run/mysqld
+RUN mkdir -p /var/run/mariadb && \
+    chown -R mysql:mysql /var/run/mariadb
 
-# Copy configuration and initialization files
-COPY conf/my.cnf /etc/my.cnf.d/mariadb-server.cnf
-COPY tools/db_setup.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/db_setup.sh
+# Copy configuration file and setup script
+COPY conf/mariadb.conf /etc/my.cnf
+COPY tools/mariadb.sh /etc/mariadb.sh
 
+# Give execution permissions to the setup script
+RUN chmod +x /etc/mariadb.sh
+# RUN /etc/mariadb.sh
+
+# Expose MariaDB port
 EXPOSE 3306
 
-ENTRYPOINT ["/usr/local/bin/db_setup.sh"]
 CMD ["mysqld", "--user=mysql"]
