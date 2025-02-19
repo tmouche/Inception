@@ -15,10 +15,10 @@ if [ ! -f "wp-config.php" ]; then
 
     # Create wp-config.php
     wp config create --allow-root \
-        --dbname=${DB_NAME} \
-        --dbuser=${DB_USER} \
-        --dbpass=${DB_PASSWORD} \
-        --dbhost=${DB_HOST} \
+        --dbname="mydatabase" \
+        --dbuser="mysql" \
+        --dbpass="mypassword" \
+        --dbhost="0.0.0.0" \
 		--path=/usr/share/webapps/
 
     # Install WordPress

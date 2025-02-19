@@ -21,7 +21,6 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 RUN mkdir -p /usr/share/webapps/ 
 
-# Copier un fichier www.conf personnalisé
 RUN addgroup -S web-data && adduser -S web-data -G web-data
 COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 
