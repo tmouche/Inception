@@ -15,10 +15,10 @@ if [ ! -f "wp-config.php" ]; then
 
     # Create wp-config.php
     wp config create --allow-root \
-        --dbname="mydatabase" \
-        --dbuser="mysql" \
-        --dbpass="mypassword" \
-        --dbhost="0.0.0.0" \
+        --dbname=${DB_NAME} \
+        --dbuser=${DB_USER} \
+        --dbpass=${DB_PASSWORD} \
+        --dbhost=${DB_HOST} \
 		--path=/usr/share/webapps/
 
     # Install WordPress
@@ -38,4 +38,6 @@ if [ ! -f "wp-config.php" ]; then
     # Set correct permissions
     chown -R web-data:web-data /usr/share/webapps/wordpress
 fi
+
+/usr/sbin/php-fpm82 -F
 

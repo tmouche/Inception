@@ -26,8 +26,7 @@ COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 COPY wordpress.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wordpress.sh
-# RUN /usr/local/bin/wordpress.sh
 
 EXPOSE 9000
 
-CMD ["/usr/sbin/php-fpm82", "-F"]
+CMD ["/usr/local/bin/wordpress.sh"]

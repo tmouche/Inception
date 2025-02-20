@@ -1,61 +1,88 @@
-version: '3'
-
 services:
-  mariadb:
-    build: 
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile
-    container_name: mariadb
-    restart: always
-    env_file: .env
-    networks:
-      - inception
-    volumes:
-      - db-data:/var/lib/mysql
-
-  wordpress:
-    build: 
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
-    container_name: wordpress
-    restart: always
-    env_file: .env
-    depends_on:
-      - mariadb
-    networks:
-      - inception
-    volumes:
-      - wordpress-data:/var/www/html
-
   nginx:
-    build: 
-      context: ./requirements/nginx
-      dockerfile: Dockerfile
     container_name: nginx
-    restart: always
-    ports:
-      - "8443:443"
+    build:
+      context: requirements/nginx/
     volumes:
-      - wordpress-data:/var/www/html
+      - wordpress:/usr/share/webapps
+    networks:
+      - inception
     depends_on:
       - wordpress
+    env_file:
+      - .env
+    ports:
+      - "8443:433"
+    secrets:
+      - nx_ssl_cer
+      - nx_ssl_key
+    restart: unless-stopped
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
     networks:
       - inception
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress:/usr/share/webapps
+    env_file:
+        - .env
+    secrets:
+      - wp_password
+      - wp_admin_password
+      - db_password
+      - db_root_password
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    build:
+      context: requirements/mariadb
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mariadb
+    secrets:
+      - wp_password
+      - wp_admin_password
+      - db_password
+      - db_root_password
+    env_file:
+      - .env
+    restart: always
 
 networks:
   inception:
+    name: inception
     driver: bridge
 
+secrets:
+  db_password:
+    file: ../secrets/db_password
+  db_root_password:
+    file: ../secrets/db_root_password
+  wp_password:
+    file: ../secrets/wp_password
+  wp_admin_password:
+    file: ../secrets/wp_admin_password
+  nx_ssl_cer:
+    file: ../secrets/ssl_certificate
+  nx_ssl_key:
+    file: ../secrets/ssl_certificate_key
+
 volumes:
-  wordpress-data:
+  wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USER}/data/wordpress
       o: bind
-  db-data:
+      device: /home/$USER/data/wordpress
+  mariadb:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USER}/data/mariadb
       o: bind
+      device: /home/$USER/data/mariadb

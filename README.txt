@@ -17,3 +17,8 @@ Modify the .env file with secure passwords
 Add the domain to your /etc/hosts file
 
 Would you like me to explain any specific part in more detail or would you like me to modify anything?
+
+VM
+hostname: root tmoucheIncep
+localhost: inception
+user: thibaud tmIncep11
