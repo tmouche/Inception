@@ -12,7 +12,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8443:433"
+      - "8443:443"
     secrets:
       - nx_ssl_cer
       - nx_ssl_key

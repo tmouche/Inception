@@ -11,7 +11,7 @@ RUN apk update && apk add --no-cache \
 	php82-curl \
 	php82-openssl \
 	php82-mysqli \
-    mysql-client
+    mariadb-client
 
 RUN ln -s /usr/bin/php82 /usr/bin/php
 RUN echo "memory_limit = 256M" > /etc/php82/conf.d/memory_limit.ini
@@ -29,4 +29,5 @@ RUN chmod +x /usr/local/bin/wordpress.sh
 
 EXPOSE 9000
 
-CMD ["/usr/local/bin/wordpress.sh"]
+ENTRYPOINT ["/usr/local/bin/wordpress.sh"]
+CMD ["/usr/sbin/php-fpm82", "-F"]
