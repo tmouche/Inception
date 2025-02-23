@@ -1,12 +1,6 @@
 #!/bin/sh
 
-# Wait for MariaDB to be ready
-# while ! mysqladmin ping -h${DB_HOST} -u${DB_USER} -p${DB_PASSWORD} --silent; do
-#     echo "Waiting for MariaDB..."
-#     sleep 1
-# done
-
-cd /usr/share/webapps/
+cd /usr/share/webapps
 
 # Check if WordPress is installed
 if [ ! -f "wp-config.php" ]; then
@@ -36,7 +30,9 @@ if [ ! -f "wp-config.php" ]; then
         --role=author
 
     # Set correct permissions
-    chown -R web-data:web-data /usr/share/webapps/wordpress
+    chown -R web-data:web-data /usr/share/webapps
 fi
+
+exec /usr/sbin/php-fpm82 -F
 
 #attention les password doivent etre dans secret

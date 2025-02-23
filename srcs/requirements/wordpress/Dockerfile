@@ -5,12 +5,13 @@ RUN apk update && apk add --no-cache \
 	fcgi \
 	tar \
 	php82 \
-	php82-fpm \
 	php82-cgi \
+	php82-fpm \
 	php82-phar \
 	php82-curl \
-	php82-openssl \
+	php82-iconv \
 	php82-mysqli \
+	php82-openssl \
     mariadb-client
 
 RUN ln -s /usr/bin/php82 /usr/bin/php
@@ -19,7 +20,7 @@ RUN echo "memory_limit = 256M" > /etc/php82/conf.d/memory_limit.ini
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wp
 
-RUN mkdir -p /usr/share/webapps/ 
+RUN mkdir -p /usr/share/webapps
 
 RUN addgroup -S web-data && adduser -S web-data -G web-data
 COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
@@ -30,4 +31,3 @@ RUN chmod +x /usr/local/bin/wordpress.sh
 EXPOSE 9000
 
 ENTRYPOINT ["/usr/local/bin/wordpress.sh"]
-CMD ["/usr/sbin/php-fpm82", "-F"]
