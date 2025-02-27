@@ -31,6 +31,7 @@ if [ ! -f "wp-config.php" ]; then
 
     # Set correct permissions
     chown -R web-data:web-data /usr/share/webapps
+    chmod -R 755 /usr/share/webapps
 fi
 
 exec /usr/sbin/php-fpm82 -F

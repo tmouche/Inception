@@ -4,31 +4,31 @@ up: secrets
 	@mkdir -p ~/data
 	@mkdir -p ~/data/wordpress
 	@mkdir -p ~/data/mariadb
-	docker-compose -f srcs/docker-compose.yml up --build --detach
+	docker compose -f srcs/docker-compose.yml up --build --detach
 
 build:
-	docker-compose -f srcs/docker-compose.yml build --no-cache
+	docker compose -f srcs/docker-compose.yml build --no-cache
 
 down:
-	docker-compose -f srcs/docker-compose.yml down
+	docker compose -f srcs/docker-compose.yml down
 
 start:
-	docker-compose -f srcs/docker-compose.yml start
+	docker compose -f srcs/docker-compose.yml start
 
 stop:
-	docker-compose -f srcs/docker-compose.yml stop
+	docker compose -f srcs/docker-compose.yml stop
 
 logs:
-	docker-compose -f srcs/docker-compose.yml logs --follow
+	docker compose -f srcs/docker-compose.yml logs --follow
 
 prune:
 	docker system prune --all --volumes --force
 
 mariadb:
-	docker-compose -f srcs/docker-compose.yml exec mariadb mariadbd
+	docker compose -f srcs/docker-compose.yml exec mariadb mariadbd
 
 clean:
-	docker-compose -f srcs/docker-compose.yml down --volumes --rmi all
+	docker compose -f srcs/docker-compose.yml down --volumes --rmi all
 
 fclean: clean
 #	Use docker run to remove data because of permissions
