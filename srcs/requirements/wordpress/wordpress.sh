@@ -30,8 +30,7 @@ if [ ! -f "wp-config.php" ]; then
         --role=author
 
     # Set correct permissions
-    chown -R web-data:web-data /usr/share/webapps
-    chmod -R 755 /usr/share/webapps
+    chown -R web-data:web-data /usr/share/webapps/wp-content/
 fi
 
 exec /usr/sbin/php-fpm82 -F

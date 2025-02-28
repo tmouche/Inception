@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.18    
 
 RUN apk update && \
 	apk add --no-cache nginx openssl
@@ -11,8 +11,8 @@ RUN openssl req -x509 -nodes -days 365 \
 
 RUN mkdir -p /run/nginx
 
-COPY conf/nginx.conf /etc/nginx/http.d/default.conf
+# COPY conf/nginx.conf /etc/nginx/http.d/default.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]

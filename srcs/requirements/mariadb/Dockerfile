@@ -17,8 +17,6 @@ RUN chown -R mysql:mysql /var/lib/mariadb/ \
 COPY conf/mariadb.conf /etc/my.cnf
 COPY tools/mariadb.sh mariadb.sh
 
-EXPOSE 3306
-
 RUN chmod +x /mariadb.sh
 
 ENTRYPOINT ["./mariadb.sh"]

@@ -25,9 +25,10 @@ RUN mkdir -p /usr/share/webapps
 RUN addgroup -S web-data && adduser -S web-data -G web-data
 COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 
+RUN chown -R web-data:web-data /usr/share/webapps
+RUN chmod -R 755 /usr/share/webapps
+
 COPY wordpress.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wordpress.sh
-
-EXPOSE 9000
 
 ENTRYPOINT ["/usr/local/bin/wordpress.sh"]

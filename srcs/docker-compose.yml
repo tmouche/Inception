@@ -12,10 +12,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8443:443"
-    secrets:
-      - nx_ssl_cer
-      - nx_ssl_key
+      - "443:443"
     restart: unless-stopped
 
   wordpress:
@@ -30,11 +27,6 @@ services:
       - wordpress:/usr/share/webapps
     env_file:
         - .env
-    secrets:
-      - wp_password
-      - wp_admin_password
-      - db_password
-      - db_root_password
     restart: always
 
   mariadb:
@@ -45,11 +37,6 @@ services:
       - inception
     volumes:
       - mariadb:/var/lib/mariadb
-    secrets:
-      - wp_password
-      - wp_admin_password
-      - db_password
-      - db_root_password
     env_file:
       - .env
     restart: always
@@ -58,20 +45,6 @@ networks:
   inception:
     name: inception
     driver: bridge
-
-secrets:
-  db_password:
-    file: ../secrets/db_password
-  db_root_password:
-    file: ../secrets/db_root_password
-  wp_password:
-    file: ../secrets/wp_password
-  wp_admin_password:
-    file: ../secrets/wp_admin_password
-  nx_ssl_cer:
-    file: ../secrets/ssl_certificate
-  nx_ssl_key:
-    file: ../secrets/ssl_certificate_key
 
 volumes:
   wordpress:
