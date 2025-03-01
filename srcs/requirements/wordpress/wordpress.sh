@@ -2,9 +2,7 @@
 
 cd /usr/share/webapps
 
-# Check if WordPress is installed
 if [ ! -f "wp-config.php" ]; then
-    # Download WordPress
 	wp core download --allow-root
 
     # Create wp-config.php
@@ -34,5 +32,3 @@ if [ ! -f "wp-config.php" ]; then
 fi
 
 exec /usr/sbin/php-fpm82 -F
-
-#attention les password doivent etre dans secret

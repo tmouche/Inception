@@ -12,4 +12,3 @@ echo "FLUSH PRIVILEGES;" >> /etc/mariadb-init.sql
 echo "MariaDB setup complete."
 
 exec mariadbd --user=mysql --init-file=/etc/mariadb-init.sql
-#Attention les passwords doivent etre "$($PASSWORD)" pour les paths secrets
