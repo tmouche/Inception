@@ -25,7 +25,7 @@ clean:
 	docker compose -f srcs/docker-compose.yml down --volumes --rmi all
 
 fclean: clean
-	rm -rf ~/data
+	sudo rm -rf /home/thibaud/data
 
 re: fclean up
 

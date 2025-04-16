@@ -1,8 +1,7 @@
 FROM alpine:3.18
 
 RUN apk update && apk add --no-cache \
-	mariadb \
-	mariadb-client
+	mariadb
 
 RUN mkdir -p /var/lib/mariadb \
 			 /var/log/mariadb \
