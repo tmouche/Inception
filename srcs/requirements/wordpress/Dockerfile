@@ -31,4 +31,6 @@ RUN chmod -R 755 /usr/share/webapps
 COPY wordpress.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wordpress.sh
 
-ENTRYPOINT ["/usr/local/bin/wordpress.sh"]
+RUN /usr/local/bin/wordpress.sh
+
+CMD ["/usr/sbin/php-fpm82", "-F"]

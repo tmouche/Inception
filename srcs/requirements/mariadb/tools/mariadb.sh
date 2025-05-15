@@ -10,5 +10,3 @@ echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';" >> /etc/
 echo "FLUSH PRIVILEGES;" >> /etc/mariadb-init.sql
 
 echo "MariaDB setup complete."
-
-exec mariadbd --user=mysql --init-file=/etc/mariadb-init.sql

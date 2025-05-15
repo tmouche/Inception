@@ -18,4 +18,6 @@ COPY tools/mariadb.sh mariadb.sh
 
 RUN chmod +x /mariadb.sh
 
-ENTRYPOINT ["./mariadb.sh"]
+RUN ./mariadb.sh
+
+CMD ["mariadbd", "--user=mysql", "--init-file=/etc/mariadb-init.sql"]

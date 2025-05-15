@@ -1,4 +1,16 @@
 services:
+  mariadb:
+    container_name: mariadb
+    build:
+      context: requirements/mariadb
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mariadb
+    env_file:
+      - .env
+    restart: always
+
   nginx:
     container_name: nginx
     build:
@@ -12,7 +24,8 @@ services:
     env_file:
       - .env
     ports:
-      - "443:443"
+      - "8080:8080"
+      # - "443:443"
     restart: unless-stopped
 
   wordpress:
@@ -27,18 +40,6 @@ services:
       - wordpress:/usr/share/webapps
     env_file:
         - .env
-    restart: always
-
-  mariadb:
-    container_name: mariadb
-    build:
-      context: requirements/mariadb
-    networks:
-      - inception
-    volumes:
-      - mariadb:/var/lib/mariadb
-    env_file:
-      - .env
     restart: always
 
 networks:

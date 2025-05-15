@@ -30,5 +30,3 @@ if [ ! -f "wp-config.php" ]; then
     # Set correct permissions
     chown -R web-data:web-data /usr/share/webapps/wp-content/
 fi
-
-exec /usr/sbin/php-fpm82 -F
